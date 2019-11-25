@@ -1,0 +1,6 @@
+.vscode
+.directory
+node_modules
+
+secrets.js
+old/

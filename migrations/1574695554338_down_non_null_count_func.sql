@@ -1,0 +1,1 @@
+drop function non_null_count;
