@@ -1,6 +1,10 @@
 .vscode
 .directory
 node_modules
+jsold/
+env
+__pycache__
 
-secrets.js
+secrets.py
 old/
+scratch/

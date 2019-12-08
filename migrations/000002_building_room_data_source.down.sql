@@ -5,3 +5,5 @@ drop table data_source;
 drop table osm_element;
 drop type osm_type;
 drop table survey;
+drop table import;
+drop function non_empty;

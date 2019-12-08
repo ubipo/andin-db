@@ -1,0 +1,106 @@
+schema {
+  query: RootQuery
+}
+
+type Address {
+  country: String
+  free: String
+  locality: String
+  postcode: String
+  region: String
+}
+
+input Area {
+  min: Int = 0
+  max: Int = 500
+}
+
+type Building {
+  address: Address
+  dataSource: DataSource
+  geometry: String
+  name: String
+  rooms(level: Int, levelPostfix: String, name: String): [Room]
+  uid: String
+}
+
+input Coordinates {
+  lon: Float!
+  lat: Float!
+}
+
+type DataSource {
+  import: Import
+  osm: OsmElement
+  survey: Survey
+}
+
+"""
+The `DateTime` scalar type represents a DateTime. The DateTime is serialized as an RFC 3339 quoted string
+"""
+scalar DateTime
+
+input DistanceFrom {
+  min: Int = 0
+  max: Int = 500
+  coordinates: Coordinates
+  place: String
+}
+
+type FilteredBuilding {
+  area: Float
+  building: Building
+  distance: Float
+}
+
+type FilteredRoom {
+  area: Float
+  distance: Float
+  room: Room
+}
+
+type Import {
+  date: DateTime
+  script: String
+  uid: String
+}
+
+type OsmElement {
+  id: Int
+  type: String
+  uid: String
+  version: String
+}
+
+type Room {
+  building: Building
+  dataSource: DataSource
+  geometry: String
+  intersecting(level: Int, levelPostfix: String, sameLevel: Boolean, sameLevelPostfix: Boolean): [Room]
+  level: Int
+  levelPostfix: String
+  name: String
+  ref: String
+  uid: String
+}
+
+type RootQuery {
+  building(uid: String!): Building
+  buildings(distanceFrom: DistanceFrom!, area: Area, sort: SortEnum): [FilteredBuilding]
+  import(uid: String!): Import
+  osmElement(uid: String!): OsmElement
+  room(uid: String!): Room
+  rooms(sort: SortEnum, distanceFrom: DistanceFrom!, area: Area): [FilteredRoom]
+  survey(uid: String!): Survey
+}
+
+enum SortEnum {
+  DISTANCE
+  AREA
+}
+
+type Survey {
+  external: Boolean
+  surveyor: String
+  uid: String
+}
